@@ -1,11 +1,14 @@
 package com.android.mis.utils;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -67,8 +70,21 @@ public class Util {
         hmap.put("view_defaulter_list",R.id.view_defaulter_list);
         hmap.put("course_structure",R.id.course_structure);
         hmap.put("view_course_structure",R.id.view_course_structure);
-
         return hmap;
+    }
+
+    public static void startDownload(String url, String name, Activity activity){
+        String DownloadUrl = url;
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(DownloadUrl));
+        request.setDescription("Downloading...");   //appears the same in Notification bar while downloading
+        request.setTitle(name);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            request.allowScanningByMediaScanner();
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        }
+        request.setDestinationInExternalFilesDir(activity.getApplicationContext(),null,name);
+        DownloadManager manager = (DownloadManager)activity.getSystemService(Context.DOWNLOAD_SERVICE);
+        manager.enqueue(request);
     }
 
     public static String getDateFromDateTime(String datetime)

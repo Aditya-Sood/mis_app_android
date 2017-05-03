@@ -1,5 +1,15 @@
 package com.android.mis.controllers.Home;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +25,9 @@ import com.android.mis.R;
 import com.android.mis.models.Home.Post;
 import com.android.mis.models.Home.Post1;
 import com.android.mis.models.Home.PostList;
+import com.android.mis.utils.DownloadService;
 import com.android.mis.utils.Urls;
+import com.android.mis.utils.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +39,13 @@ import java.util.List;
 public class PostAdapter extends SectionedRecyclerViewAdapter<RecyclerView.ViewHolder> {
 
     private List<PostList> allData;
+    private Activity activity;
+    private static final int PERMISSION_REQUEST_CODE = 1;
+    private Context context;
 
-    public PostAdapter(List<PostList> data) {
+
+    public PostAdapter(List<PostList> data, Activity activity) {
+        this.activity = activity;
         this.allData = data;
     }
 
@@ -54,12 +71,26 @@ public class PostAdapter extends SectionedRecyclerViewAdapter<RecyclerView.ViewH
 
         ArrayList<Post1> itemsInSection = allData.get(section).getAllPostsOnGivenDate();
 
-        Post1 itemName = itemsInSection.get(relativePosition);
+        final Post1 itemName = itemsInSection.get(relativePosition);
 
         ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
 
         itemViewHolder.userOfPost.setText(itemName.getPostIssuedBy());
         itemViewHolder.multiPurposeButton.setText("Download Attachment");
+
+        itemViewHolder.multiPurposeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = Urls.notice_base_path+itemName.getPostPath();
+                if(checkPermission())
+                {
+                    Util.startDownload(url,itemName.getPostPath(),activity);
+                }
+                else{
+                    requestPermission(url,itemName.getPostPath());
+                }
+            }
+        });
 
         if(itemName.getPostIssuedBy().contentEquals(Urls.no_post_message))
         {
@@ -85,6 +116,32 @@ public class PostAdapter extends SectionedRecyclerViewAdapter<RecyclerView.ViewH
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.fragment_home_item, parent, false);
             return new ItemViewHolder(v);
+        }
+    }
+
+    private boolean checkPermission(){
+        int result = ContextCompat.checkSelfPermission(activity,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (result == PackageManager.PERMISSION_GRANTED){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void requestPermission(String url,String name){
+        ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,url,name},PERMISSION_REQUEST_CODE);
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Util.startDownload(permissions[1],permissions[2],activity);
+                } else {
+                    Toast.makeText(activity.getApplicationContext(),"Request dinied",Toast.LENGTH_LONG).show();
+                }
+                break;
         }
     }
 

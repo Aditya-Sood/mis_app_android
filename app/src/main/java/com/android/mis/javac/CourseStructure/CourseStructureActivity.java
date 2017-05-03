@@ -1,5 +1,6 @@
 package com.android.mis.javac.CourseStructure;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -17,6 +19,7 @@ import android.widget.Spinner;
 import com.android.mis.R;
 import com.android.mis.controllers.CourseStructure.CoursesAdapter;
 import com.android.mis.controllers.SpinnerAdapter;
+import com.android.mis.javac.Home.HomeActivity;
 import com.android.mis.models.CourseStructure.Course;
 import com.android.mis.models.CourseStructure.Department;
 import com.android.mis.utils.Callback;
@@ -71,14 +74,6 @@ public class CourseStructureActivity extends AppCompatActivity implements Adapte
         departments.add(new Department("Select Department","dept_id","dept_type"));
 
         fetchDepartmentDetails();
-        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     private void fetchDepartmentDetails(){
@@ -86,7 +81,7 @@ public class CourseStructureActivity extends AppCompatActivity implements Adapte
         SessionManagement session = new SessionManagement(getApplicationContext());
         if(session.isLoggedIn())
         {
-            params = session.getSessionDetails();
+            params = session.getTokenDetails();
         }
         spinnerLayout.setVisibility(View.GONE);
         spinner.setVisibility(View.GONE);
@@ -101,7 +96,7 @@ public class CourseStructureActivity extends AppCompatActivity implements Adapte
         SessionManagement session = new SessionManagement(getApplicationContext());
         if(session.isLoggedIn())
         {
-            params = session.getSessionDetails();
+            params = session.getTokenDetails();
         }
 
         params.put("dept_id",dept_id);
@@ -190,5 +185,16 @@ public class CourseStructureActivity extends AppCompatActivity implements Adapte
                 }
                 break;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                Intent homeIntent = new Intent(this, HomeActivity.class);
+                homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
+        }
+        return (super.onOptionsItemSelected(menuItem));
     }
 }

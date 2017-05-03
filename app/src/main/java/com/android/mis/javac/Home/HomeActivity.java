@@ -1,9 +1,14 @@
 package com.android.mis.javac.Home;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,17 +20,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.mis.R;
 import com.android.mis.javac.Attendance.AttendancePreDetails;
 import com.android.mis.javac.CourseStructure.CourseStructureActivity;
 import com.android.mis.javac.ViewDetails.ViewDetails;
+import com.android.mis.models.Download;
 import com.android.mis.utils.Callback;
+import com.android.mis.utils.CircleTransform;
 import com.android.mis.utils.NetworkRequest;
 import com.android.mis.utils.SessionManagement;
 import com.android.mis.utils.Urls;
 import com.android.mis.utils.Util;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,9 +48,13 @@ public class HomeActivity extends AppCompatActivity
 
     View loader,error;
     HashMap<String,String> hmap;
+    HashMap<String,String> sessionDetails;
+    ImageView userPic;
+    TextView userName,userEmailId;
     NavigationView navigationView;
     Menu menu;
     ImageButton refresh_button_header;
+    public static final String MESSAGE_PROGRESS = "message_progress";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,21 +70,62 @@ public class HomeActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View header = navigationView.getHeaderView(0);
         View headerview=getLayoutInflater().inflate(R.layout.nav_header_home, null);
 
+        userPic = (ImageView)header.findViewById(R.id.user_profile_pic);
+        userName = (TextView)header.findViewById(R.id.user_name);
+        userEmailId = (TextView)header.findViewById(R.id.user_email);
+
+        registerReceiver();
         hmap = new HashMap<>();
+        sessionDetails = new HashMap<>();
         SessionManagement session = new SessionManagement(getApplicationContext());
         if(session.isLoggedIn())
         {
-            hmap = session.getSessionDetails();
+            hmap = session.getTokenDetails();
+            sessionDetails = session.getSessionDetails();
+            userName.setText(sessionDetails.get(SessionManagement.KEY_NAME));
+            userEmailId.setText(sessionDetails.get(SessionManagement.KEY_EMAIL));
+            Picasso.with(getApplicationContext()).load(Urls.image_base_path+sessionDetails.get(SessionManagement.KEY_PIC_PATH)).transform(new CircleTransform()).placeholder(R.mipmap.default_usr).error(R.mipmap.default_usr).resize(100,100).into(userPic);
         }
+
         loader = headerview.findViewById(R.id.loader);
         loadFragment(new HomeFragment(),"Home");
         performNetworkRequest();
     }
+
+    private void registerReceiver(){
+
+        LocalBroadcastManager bManager = LocalBroadcastManager.getInstance(this);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(MESSAGE_PROGRESS);
+        bManager.registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if(intent.getAction().equals(MESSAGE_PROGRESS)){
+
+                Download download = intent.getParcelableExtra("download");
+                if(download.getProgress() == 100){
+
+                    Toast.makeText(getApplicationContext(),"File Downloaded",Toast.LENGTH_LONG).show();
+
+                } else {
+                    Toast.makeText(getApplicationContext(),String.format("Downloaded (%d/%d) MB",download.getCurrentFileSize(),download.getTotalFileSize()),Toast.LENGTH_LONG).show();
+                    //mProgressText.setText(String.format("Downloaded (%d/%d) MB",download.getCurrentFileSize(),download.getTotalFileSize()));
+
+                }
+            }
+        }
+    };
 
     public void performNetworkRequest(){
         NetworkRequest nr = new NetworkRequest(HomeActivity.this,loader,loader,this,"get","http", Urls.menu_url,hmap,true,false,0);

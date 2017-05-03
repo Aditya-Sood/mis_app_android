@@ -1,5 +1,6 @@
 package com.android.mis.javac.CourseStructure;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -96,15 +97,6 @@ public class ViewCourse extends AppCompatActivity implements Callback {
         });
 
         fetchDetails();
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, start_sem+" "+end_sem, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     private void setupViewPager(ViewPager viewPager, ArrayList<String> list, JSONObject json) throws JSONException {
@@ -136,7 +128,7 @@ public class ViewCourse extends AppCompatActivity implements Callback {
         SessionManagement session = new SessionManagement(getApplicationContext());
         if(session.isLoggedIn())
         {
-            params = session.getSessionDetails();
+            params = session.getTokenDetails();
         }
         params.put("session",extras.getString("session"));
         params.put("semester",extras.getString("semester"));
@@ -176,14 +168,14 @@ public class ViewCourse extends AppCompatActivity implements Callback {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                Intent homeIntent = new Intent(this, CourseStructureActivity.class);
+                homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
         }
-
-        return super.onOptionsItemSelected(item);
+        return (super.onOptionsItemSelected(menuItem));
     }
 
     @Override

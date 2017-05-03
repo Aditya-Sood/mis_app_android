@@ -1,20 +1,19 @@
 package com.android.mis.javac.Attendance;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.android.mis.R;
 import com.android.mis.controllers.Attendance.ViewAttendanceAdapter;
-import com.android.mis.controllers.ViewDetails.StayDetailsAdapter;
-import com.android.mis.javac.Login.LoginActivity;
+import com.android.mis.javac.Home.HomeActivity;
 import com.android.mis.models.Attendance.SubjectAttendanceItem;
 import com.android.mis.utils.Callback;
 import com.android.mis.utils.NetworkRequest;
@@ -67,7 +66,7 @@ public class ViewAttendance extends AppCompatActivity implements Callback{
         SessionManagement session = new SessionManagement(getApplicationContext());
         if(session.isLoggedIn())
         {
-            params = session.getSessionDetails();
+            params = session.getTokenDetails();
         }
         if(extras!=null)
         {
@@ -110,5 +109,16 @@ public class ViewAttendance extends AppCompatActivity implements Callback{
        //     Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_LONG).show();
             Util.viewSnackbar(findViewById(android.R.id.content), Urls.parsing_error_message);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                Intent homeIntent = new Intent(this, AttendancePreDetails.class);
+                homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
+        }
+        return (super.onOptionsItemSelected(menuItem));
     }
 }

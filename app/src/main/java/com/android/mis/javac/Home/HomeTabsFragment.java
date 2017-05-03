@@ -94,7 +94,7 @@ public class HomeTabsFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager mLayoutManager  = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
-        PostAdapter adapter = new PostAdapter(posts);
+        PostAdapter adapter = new PostAdapter(posts,getActivity());
         recyclerView.setAdapter(adapter);
         return rootView;
     }

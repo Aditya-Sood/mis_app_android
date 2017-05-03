@@ -143,8 +143,11 @@ public class LoginActivity extends AppCompatActivity implements Callback{
             Boolean success = json.getBoolean("success");
             if(success){
                 String token = json.getString("token");
+                String name = json.getString("name");
+                String email = json.getString("email");
+                String pic_path = json.getString("pic_path");
                 SessionManagement session = new SessionManagement(getApplicationContext());
-                session.createLoginSession(token);
+                session.createLoginSession(token,name,email,pic_path);
                 Bundle bundle = new Bundle();
                 Util.moveToActivity(LoginActivity.this,HomeActivity.class,bundle);
             }

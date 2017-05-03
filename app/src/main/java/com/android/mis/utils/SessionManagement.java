@@ -30,6 +30,15 @@ public class SessionManagement {
 	// User name (make variable public to access from outside)
 	public static final String KEY_TOKEN = "access_token";
 
+	// User name
+	public static final String KEY_NAME = "user_name";
+
+	// User emails
+	public static final String KEY_EMAIL = "user_email";
+
+	// User picPath
+	public static final String KEY_PIC_PATH = "user_profile_pic_path";
+
 	// App version
 	public static final String KEY_APP_VERSION = "app_version";
 
@@ -44,12 +53,21 @@ public class SessionManagement {
 	/**
 	 * Create login session
 	 * */
-	public void createLoginSession(String token){
+	public void createLoginSession(String token,String name,String email,String pic_path){
 		// Storing login value as TRUE
 		editor.putBoolean(IS_LOGIN, true);
 
 		// Storing the token
 		editor.putString(KEY_TOKEN,token);
+
+		// Storing the name
+		editor.putString(KEY_NAME,name);
+
+		// Storing the email
+		editor.putString(KEY_EMAIL,email);
+
+		// Storing the pic path
+		editor.putString(KEY_PIC_PATH,pic_path);
 
 		// commit changes
 		editor.commit();
@@ -80,7 +98,7 @@ public class SessionManagement {
 	/**
 	 * Get stored session data
 	 * */
-	public HashMap<String, String> getSessionDetails(){
+	public HashMap<String, String> getTokenDetails(){
 		HashMap<String, String> user = new HashMap<String, String>();
 		// user name
 		user.put(KEY_TOKEN, pref.getString(KEY_TOKEN, null));
@@ -88,7 +106,18 @@ public class SessionManagement {
         // return user
 		return user;
 	}
-	
+
+    public HashMap<String,String> getSessionDetails(){
+        HashMap<String, String> user = new HashMap<String, String>();
+        // user name
+        user.put(KEY_TOKEN, pref.getString(KEY_TOKEN, null));
+        user.put(KEY_NAME,pref.getString(KEY_NAME,null));
+        user.put(KEY_PIC_PATH,pref.getString(KEY_PIC_PATH,null));
+        user.put(KEY_EMAIL,pref.getString(KEY_EMAIL,null));
+        // return user
+        return user;
+    }
+
 	/**
 	 * Clear session details
 	 * */

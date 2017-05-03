@@ -1,10 +1,11 @@
 package com.android.mis.javac.Attendance;
 
-import android.net.Uri;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,22 +14,18 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.mis.R;
+import com.android.mis.javac.Home.HomeActivity;
 import com.android.mis.utils.Callback;
 import com.android.mis.utils.NetworkRequest;
 import com.android.mis.utils.SessionManagement;
 import com.android.mis.utils.Urls;
 import com.android.mis.utils.Util;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class AttendancePreDetails extends AppCompatActivity implements AdapterView.OnItemSelectedListener, Callback {
     private Spinner session_spinner, session_year_spinner, semester_spinner;
@@ -118,7 +115,7 @@ public class AttendancePreDetails extends AppCompatActivity implements AdapterVi
                 HashMap params = new HashMap();
                 SessionManagement session = new SessionManagement(getApplicationContext());
                 if (session.isLoggedIn()) {
-                    params = session.getSessionDetails();
+                    params = session.getTokenDetails();
                 }
                 NetworkRequest nr = new NetworkRequest(AttendancePreDetails.this, mProgressView, mErrorView, this, "get", Urls.server_protocol, Urls.session_year_url, params, false, true, 0);
                 nr.setSnackbar_message(Urls.error_connection_message);
@@ -131,7 +128,7 @@ public class AttendancePreDetails extends AppCompatActivity implements AdapterVi
                 HashMap param = new HashMap();
                 SessionManagement sessin = new SessionManagement(getApplicationContext());
                 if (sessin.isLoggedIn()) {
-                    param = sessin.getSessionDetails();
+                    param = sessin.getTokenDetails();
                 }
                 param.put("sessionyear", session_year_spinner.getSelectedItem().toString());
                 param.put("session", session_spinner.getSelectedItem().toString());
@@ -220,6 +217,17 @@ public class AttendancePreDetails extends AppCompatActivity implements AdapterVi
         }
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                Intent homeIntent = new Intent(this, HomeActivity.class);
+                homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
+        }
+        return (super.onOptionsItemSelected(menuItem));
     }
 
     @Override

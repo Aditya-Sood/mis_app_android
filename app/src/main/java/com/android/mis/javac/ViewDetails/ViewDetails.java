@@ -1,5 +1,6 @@
 package com.android.mis.javac.ViewDetails;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -18,6 +19,8 @@ import android.widget.TextView;
 
 import com.android.mis.R;
 import com.android.mis.controllers.ViewPagerAdapter;
+import com.android.mis.javac.Home.HomeActivity;
+import com.android.mis.javac.MainActivity;
 import com.android.mis.javac.MoveToActivityFragment;
 import com.android.mis.utils.Callback;
 import com.android.mis.utils.NetworkRequest;
@@ -87,15 +90,6 @@ public class ViewDetails extends AppCompatActivity implements Callback {
         });
 
         fetchDetails();
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     private void setupViewPager(ViewPager viewPager,ArrayList<String> list,JSONObject json,String auth) throws JSONException {
@@ -155,7 +149,7 @@ public class ViewDetails extends AppCompatActivity implements Callback {
         SessionManagement session = new SessionManagement(getApplicationContext());
         if(session.isLoggedIn())
         {
-            params = session.getSessionDetails();
+            params = session.getTokenDetails();
         }
         tabLayout.setVisibility(View.GONE);
         NetworkRequest nr = new NetworkRequest(ViewDetails.this,mProgressView,mErrorView,this,"get", Urls.server_protocol,Urls.view_details_url,params,false,true,0);
@@ -191,18 +185,14 @@ public class ViewDetails extends AppCompatActivity implements Callback {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                Intent homeIntent = new Intent(this, HomeActivity.class);
+                homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
         }
-
-        return super.onOptionsItemSelected(item);
+        return (super.onOptionsItemSelected(menuItem));
     }
 
     @Override

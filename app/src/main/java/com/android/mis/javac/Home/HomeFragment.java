@@ -13,20 +13,16 @@ import android.widget.TextView;
 
 import com.android.mis.R;
 import com.android.mis.controllers.ViewPagerAdapter;
-import com.android.mis.javac.ViewDetails.ViewDetails;
 import com.android.mis.utils.Callback;
 import com.android.mis.utils.NetworkRequest;
 import com.android.mis.utils.SessionManagement;
 import com.android.mis.utils.Urls;
 import com.android.mis.utils.Util;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 
 public class HomeFragment extends Fragment implements Callback{
@@ -111,7 +107,7 @@ public class HomeFragment extends Fragment implements Callback{
         SessionManagement session = new SessionManagement(getActivity().getApplicationContext());
         if(session.isLoggedIn())
         {
-            params = session.getSessionDetails();
+            params = session.getTokenDetails();
         }
         tabLayout.setVisibility(View.GONE);
         NetworkRequest nr = new NetworkRequest(getActivity(),mProgressView,mErrorView,this,"get", Urls.server_protocol,Urls.post_details_url,params,false,true,0);

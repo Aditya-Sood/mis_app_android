@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -12,21 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.android.mis.R;
-import com.android.mis.javac.ViewDetails.ViewDetails;
 import com.android.mis.models.Attendance.SubjectAttendanceItem;
-import com.android.mis.models.CourseStructure.Subject;
 import com.android.mis.utils.Callback;
 import com.android.mis.utils.NetworkRequest;
 import com.android.mis.utils.SessionManagement;
 import com.android.mis.utils.Urls;
-import com.android.mis.utils.Util;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -163,7 +158,7 @@ public class ViewAttendanceAdapter extends RecyclerView.Adapter<com.android.mis.
         SessionManagement session = new SessionManagement(context);
         if(session.isLoggedIn())
         {
-            params = session.getSessionDetails();
+            params = session.getTokenDetails();
         }
         params.put("map_id",member.getMapId());
         params.put("sub_id",member.getId());
