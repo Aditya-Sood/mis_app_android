@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity implements Callback{
                 SessionManagement session = new SessionManagement(getApplicationContext());
                 session.createLoginSession(token,name,email,pic_path);
                 Bundle bundle = new Bundle();
-                Util.moveToActivity(LoginActivity.this,HomeActivity.class,bundle);
+                Util.moveToActivity(LoginActivity.this,HomeActivity.class,bundle,true);
             }
             else{
                 Util.viewSnackbar(findViewById(android.R.id.content),json.getString("err_msg"));

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         tools:ignore="UselessParent">
         <ImageView
             android:id="@+id/logo"
@@ -22,6 +22,13 @@
             android:keepScreenOn="true"
             android:src="@mipmap/app_logo"
             android:contentDescription="IIT(ISM) Logo" />
+
+        <ProgressBar
+            android:id="@+id/preloader"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <!-- This FrameLayout insets its children based on system windows using

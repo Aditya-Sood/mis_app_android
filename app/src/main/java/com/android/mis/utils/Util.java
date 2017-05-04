@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.mis.R;
+import com.android.mis.javac.Login.LoginActivity;
 import com.androidadvance.topsnackbar.TSnackbar;
 
 import java.util.Date;
@@ -23,10 +24,6 @@ import java.util.HashMap;
  * Created by RDC on 1/29/2016.
  */
 public class Util {
-    public final static String FOOD_FETCH = "fetch_food";
-    public static final String PROPERTY_REG_ID = "registration_id";
-    public static final String PROPERTY_APP_VERSION = "appVersion";
-
 
     public static boolean checkInternet(Context context)
     {
@@ -51,11 +48,14 @@ public class Util {
         snackbar.show();
     }
 
-    public static void moveToActivity(Activity source, Class destination, Bundle bundle)
+    public static void moveToActivity(Activity source, Class destination, Bundle bundle,Boolean clearHistory)
     {
         Intent i = new Intent(source,destination);
         if(bundle!=null)
         i.putExtras(bundle);
+        if(clearHistory)
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
         source.startActivity(i);
     }
 
@@ -70,6 +70,8 @@ public class Util {
         hmap.put("view_defaulter_list",R.id.view_defaulter_list);
         hmap.put("course_structure",R.id.course_structure);
         hmap.put("view_course_structure",R.id.view_course_structure);
+        hmap.put("others",R.id.others);
+        hmap.put("logout",R.id.logout);
         return hmap;
     }
 
@@ -85,6 +87,15 @@ public class Util {
         request.setDestinationInExternalFilesDir(activity.getApplicationContext(),null,name);
         DownloadManager manager = (DownloadManager)activity.getSystemService(Context.DOWNLOAD_SERVICE);
         manager.enqueue(request);
+    }
+
+    public static void logoutUser(Activity activity){
+        AppController.getInstance().getRequestQueue().getCache().clear();
+        SessionManagement session = new SessionManagement(activity.getApplicationContext());
+        session.logoutUser();
+        Intent i = new Intent(activity,LoginActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        activity.startActivity(i);;
     }
 
     public static String getDateFromDateTime(String datetime)

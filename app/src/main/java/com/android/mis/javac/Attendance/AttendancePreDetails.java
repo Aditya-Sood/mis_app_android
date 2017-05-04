@@ -94,7 +94,7 @@ public class AttendancePreDetails extends AppCompatActivity implements AdapterVi
                     extras.putString("session_year", session_year_spinner.getSelectedItem().toString());
                     extras.putString("session", session_spinner.getSelectedItem().toString());
                     extras.putString("semester", semester_spinner.getSelectedItem().toString());
-                    Util.moveToActivity(AttendancePreDetails.this, ViewAttendance.class, extras);
+                    Util.moveToActivity(AttendancePreDetails.this, ViewAttendance.class, extras,false);
                 }
             }
         });

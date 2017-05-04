@@ -55,5 +55,17 @@
                 </item>
             </menu>
         </item>
+
+        <item
+            android:id="@+id/others"
+            android:visible="false"
+            android:title="Others">
+            <menu>
+                <item
+                    android:id="@+id/logout"
+                    android:title="Logout">
+                </item>
+            </menu>
+        </item>
     </group>
 </menu>

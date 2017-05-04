@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.support.v4.util.ArraySet;
 
 import com.android.mis.javac.Login.LoginActivity;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SessionManagement {
     SharedPreferences pref;
@@ -42,6 +45,9 @@ public class SessionManagement {
 	// App version
 	public static final String KEY_APP_VERSION = "app_version";
 
+	// cache request keys
+	public static  final String KEY_CACHE_REQ_KEYS = "cache_keys";
+
 
 	// Constructor
 	public SessionManagement(Context context){
@@ -69,10 +75,18 @@ public class SessionManagement {
 		// Storing the pic path
 		editor.putString(KEY_PIC_PATH,pic_path);
 
+		Set<String> cached_keys = new ArraySet<>();
+		editor.putStringSet(KEY_CACHE_REQ_KEYS,cached_keys);
 		// commit changes
 		editor.commit();
 	}
 
+	public void insertCachedKeys(String key){
+		Set<String> cached_keys = pref.getStringSet(KEY_CACHE_REQ_KEYS,new ArraySet<String>());
+		cached_keys.add(key);
+		editor.putStringSet(KEY_CACHE_REQ_KEYS,cached_keys);
+		editor.commit();
+	}
 	
 	/**
 	 * Check login method will check user login status
@@ -122,8 +136,9 @@ public class SessionManagement {
 	 * Clear session details
 	 * */
 	public void logoutUser(){
-		// Clearing all data from Shared Preferences
+		//Set<String> cached_keys = pref.getStringSet(KEY_CACHE_REQ_KEYS,new ArraySet<String>());
 
+		// Clearing all data from Shared Preferences
 		editor.clear();
 		editor.commit();
 		

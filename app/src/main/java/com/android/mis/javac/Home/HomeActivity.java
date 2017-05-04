@@ -100,7 +100,6 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void registerReceiver(){
-
         LocalBroadcastManager bManager = LocalBroadcastManager.getInstance(this);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(MESSAGE_PROGRESS);
@@ -159,21 +158,25 @@ public class HomeActivity extends AppCompatActivity
                 break;
 
             case R.id.view_details:
-                Util.moveToActivity(HomeActivity.this,ViewDetails.class,null);
+                Util.moveToActivity(HomeActivity.this,ViewDetails.class,null,false);
                 return true;
 
             case R.id.edit_details:
                 break;
 
             case R.id.view_attendance:
-                Util.moveToActivity(HomeActivity.this,AttendancePreDetails.class,null);
+                Util.moveToActivity(HomeActivity.this,AttendancePreDetails.class,null,false);
                 break;
 
             case R.id.view_defaulter_list:
                 break;
 
             case R.id.view_course_structure:
-                Util.moveToActivity(HomeActivity.this,CourseStructureActivity.class,null);
+                Util.moveToActivity(HomeActivity.this,CourseStructureActivity.class,null,false);
+                break;
+
+            case R.id.logout:
+                Util.logoutUser(HomeActivity.this);
                 return true;
 
         }
@@ -187,7 +190,6 @@ public class HomeActivity extends AppCompatActivity
     private void loadFragment(Fragment fragment,String title)
     {
         if (fragment != null) {
-            Log.d("not null","not teer");
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.content_home, fragment);
@@ -196,7 +198,7 @@ public class HomeActivity extends AppCompatActivity
             // set the toolbar title
             getSupportActionBar().setTitle(title);
         }else{
-            Toast.makeText(getApplicationContext(),title,1000).show();
+            Toast.makeText(getApplicationContext(),title,Toast.LENGTH_LONG).show();
         }
     }
 
@@ -224,7 +226,9 @@ public class HomeActivity extends AppCompatActivity
         menu = navigationView.getMenu();
         while(iterator.hasNext()) {
             String key = (String) iterator.next();
-            Log.d("key",modules.optString(key));
+            Toast.makeText(getApplicationContext(),modules.optString(key),Toast.LENGTH_LONG).show();
+            Log.d("hurray",modules.optString(key));
+
             MenuItem current =  menu.findItem(hmap.get(modules.optString(key)));
             current.setVisible(true);
         }

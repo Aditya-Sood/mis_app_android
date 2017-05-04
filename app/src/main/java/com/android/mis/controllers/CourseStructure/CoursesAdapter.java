@@ -91,7 +91,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.MyViewHo
                     extras.putString("start_sem",selected);
                     extras.putString("end_sem",selected);
                 }
-                Util.moveToActivity(activity, ViewCourse.class,extras);
+                Util.moveToActivity(activity, ViewCourse.class,extras,false);
             }
         });
 

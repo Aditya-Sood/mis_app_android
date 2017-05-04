@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.android.volley.Cache;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -13,6 +14,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -26,7 +28,7 @@ import java.util.Map;
  * Created by rajat on 2/3/17.
  */
 
-public class NetworkRequest {
+public class NetworkRequest{
 
     private String url,protocol,req_key,result,snackbar_message="";
     private int method,tag;
@@ -96,7 +98,6 @@ public class NetworkRequest {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String,String> parameters = new HashMap<>();
-                    parameters.put("Hey","GOD");
                     if(params != null)
                     {
                         for (HashMap.Entry<String, String> entry : params.entrySet())
@@ -112,6 +113,10 @@ public class NetworkRequest {
             {
                 stringReq.setShouldCache(false);
             }
+           /* else{
+                SessionManagement session = new SessionManagement(cntxt.getApplicationContext());
+                session.insertCachedKeys(url);
+            }*/
             addRequestToQueue(stringReq);
         }
         else{
@@ -145,15 +150,26 @@ public class NetworkRequest {
         activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         if(success)
         {
-            callback.performAction(result,tag);
+            try{
+                JSONObject json = new JSONObject(result);
+                String message = json.getString("message");
+                if(message.contentEquals(Urls.token_expired_message)){
+                    Util.logoutUser(cntxt);
+                }
+                else{
+                    callback.performAction(result,tag);
+                }
+            }catch (Exception e) {
+                callback.performAction(result, tag);
+            }
         }
         else{
             if(show_error_page)
             {
                 error_layout.setVisibility(View.VISIBLE);
             }
-            else{
-                Util.viewSnackbar(activity.getWindow().findViewById(android.R.id.content),snackbar_message);
+            else {
+                Util.viewSnackbar(activity.getWindow().findViewById(android.R.id.content), snackbar_message);
             }
         }
     }
