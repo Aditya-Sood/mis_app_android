@@ -78,7 +78,8 @@
             android:label="@string/title_activity_generate_attendance_sheet_pre_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".javac.Attendance.GenerateAttendanceSheet.SubjectsByTeacherActivity" />
-        <activity android:name=".javac.Attendance.GenerateAttendanceSheet.ViewAttendanceSheet"></activity>
+        <activity android:name=".javac.Attendance.GenerateAttendanceSheet.ViewAttendanceSheet">
+        </activity>
     </application>
 
 </manifest>

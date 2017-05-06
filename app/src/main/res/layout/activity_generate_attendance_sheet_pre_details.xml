@@ -8,8 +8,6 @@
     android:fitsSystemWindows="true"
     tools:context="com.android.mis.javac.Attendance.GenerateAttendanceSheet.GenerateAttendanceSheetPreDetails">
 
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -203,4 +203,10 @@ public class AttendanceSheetAdapter extends RecyclerView.Adapter<AttendanceSheet
     public int getItemCount() {
         return studentList.size();
     }
+
+    public void setFilter(List<Student> countryModels) {
+        studentList = new ArrayList<>();
+        studentList.addAll(countryModels);
+        notifyDataSetChanged();
+    }
 }

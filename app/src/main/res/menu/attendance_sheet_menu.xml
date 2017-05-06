@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:appcompat="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools">
+
+    <group android:checkableBehavior="all">
+        <item
+            android:id="@+id/action_show_defaulter_list"
+            android:title="Show defaulter list"
+            android:orderInCategory="100"
+            android:checkable="true"
+            app:actionViewClass="android.widget.CheckBox"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/menu_search"
+            android:title="Search Here"
+            appcompat:actionViewClass="android.support.v7.widget.SearchView"
+            appcompat:showAsAction="always"/>
+    </group>
+</menu>
