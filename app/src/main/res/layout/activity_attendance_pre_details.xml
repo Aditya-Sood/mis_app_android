@@ -4,7 +4,7 @@
     android:id="@+id/activity_attendance_pre_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.android.mis.javac.Attendance.AttendancePreDetails">
+    tools:context="com.android.mis.javac.Attendance.ViewAttendance.AttendancePreDetails">
 
     <FrameLayout
         android:layout_width="match_parent"

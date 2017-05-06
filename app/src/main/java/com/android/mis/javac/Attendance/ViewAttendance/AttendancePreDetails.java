@@ -1,4 +1,4 @@
-package com.android.mis.javac.Attendance;
+package com.android.mis.javac.Attendance.ViewAttendance;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -94,7 +94,7 @@ public class AttendancePreDetails extends AppCompatActivity implements AdapterVi
                     extras.putString("session_year", session_year_spinner.getSelectedItem().toString());
                     extras.putString("session", session_spinner.getSelectedItem().toString());
                     extras.putString("semester", semester_spinner.getSelectedItem().toString());
-                    Util.moveToActivity(AttendancePreDetails.this, ViewAttendance.class, extras,false);
+                    Util.moveToActivity(AttendancePreDetails.this, ViewAttendanceActivity.class, extras,false);
                 }
             }
         });
@@ -117,7 +117,7 @@ public class AttendancePreDetails extends AppCompatActivity implements AdapterVi
                 if (session.isLoggedIn()) {
                     params = session.getTokenDetails();
                 }
-                NetworkRequest nr = new NetworkRequest(AttendancePreDetails.this, mProgressView, mErrorView, this, "get", Urls.server_protocol, Urls.session_year_url, params, false, true, 0);
+                NetworkRequest nr = new NetworkRequest(AttendancePreDetails.this, mProgressView, mErrorView, this, "get", Urls.server_protocol, Urls.session_year_url, params,true, true, 0);
                 nr.setSnackbar_message(Urls.error_connection_message);
                 nr.initiateRequest();
                 break;

@@ -37,6 +37,11 @@
                     android:visible="false">
                 </item>
                 <item
+                    android:id="@+id/generate_attendance_sheet"
+                    android:title="Generate Attendance Sheet"
+                    android:visible="false">
+                </item>
+                <item
                     android:id="@+id/view_defaulter_list"
                     android:title="View Defaulter List"
                     android:visible="false">

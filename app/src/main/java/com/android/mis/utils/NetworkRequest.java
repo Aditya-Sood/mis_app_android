@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.android.volley.Cache;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -109,6 +110,7 @@ public class NetworkRequest{
                     return parameters;
                 }
             };
+            stringReq.setRetryPolicy(new DefaultRetryPolicy(15000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             if(!addToCache)
             {
                 stringReq.setShouldCache(false);

@@ -34,4 +34,10 @@
     <string name="title_activity_view_course">View Course</string>
     <string name="title_activity_attendance_details">Attendance Details</string>
     <string name="attendance">Attendance</string>
+    <string name="title_activity_generate_attendance_sheet_pre_details">
+        GenerateAttendanceSheetPreDetails
+    </string>
+    <string name="title_activity_generate_attendance_sheet_for_comm_students">
+        GenerateAttendanceSheetForCommStudents
+    </string>
 </resources>

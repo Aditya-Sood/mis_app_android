@@ -1,4 +1,4 @@
-package com.android.mis.javac.Attendance;
+package com.android.mis.javac.Attendance.GenerateAttendanceSheet;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +12,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.android.mis.R;
-import com.android.mis.controllers.Attendance.ViewAttendanceAdapter;
-import com.android.mis.javac.Home.HomeActivity;
-import com.android.mis.models.Attendance.SubjectAttendanceItem;
+import com.android.mis.controllers.Attendance.SubjectByTeacherAdapter;
+import com.android.mis.models.Attendance.SubjectByTeacher;
 import com.android.mis.utils.Callback;
 import com.android.mis.utils.NetworkRequest;
 import com.android.mis.utils.SessionManagement;
@@ -27,9 +26,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ViewAttendance extends AppCompatActivity implements Callback{
+public class SubjectsByTeacherActivity extends AppCompatActivity implements Callback{
+
     private RecyclerView recyclerView;
-    private ArrayList<SubjectAttendanceItem> subjectAttendanceItemsList;
+    private ArrayList<SubjectByTeacher> subjectsList;
     private View mProgressView;
     private View mErrorView;
     private Button refreshOnError;
@@ -39,13 +39,12 @@ public class ViewAttendance extends AppCompatActivity implements Callback{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_attendance_details);
-
+        setContentView(R.layout.activity_subjects_by_teacher);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         extras = getIntent().getExtras();
         params = new HashMap<>();
-        subjectAttendanceItemsList = new ArrayList<>();
+        subjectsList = new ArrayList<>();
 
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         mProgressView = findViewById(R.id.loader);
@@ -72,10 +71,9 @@ public class ViewAttendance extends AppCompatActivity implements Callback{
         {
             params.put("session",extras.getString("session"));
             params.put("sessionyear",extras.getString("session_year"));
-            params.put("semester",extras.getString("semester"));
         }
 
-        NetworkRequest nr = new NetworkRequest(ViewAttendance.this,mProgressView,mErrorView,this,"get", Urls.server_protocol,Urls.view_attendance_url,params,false,true,0);
+        NetworkRequest nr = new NetworkRequest(SubjectsByTeacherActivity.this,mProgressView,mErrorView,this,"get", Urls.server_protocol,Urls.subjects_mapped_url,params,false,true,0);
         nr.setSnackbar_message(Urls.error_connection_message);
         nr.initiateRequest();
     }
@@ -85,17 +83,14 @@ public class ViewAttendance extends AppCompatActivity implements Callback{
         try {
             JSONObject json = new JSONObject(result);
             if (json.getBoolean("success") == true) {
-                JSONObject attendance = json.getJSONObject("attendance");
-                int map_id = attendance.getInt("map_id");
-                JSONArray subject_array = attendance.getJSONArray("subjects");
+                JSONArray subject_array = json.getJSONArray("subjects");
                 for(int i=0;i<subject_array.length();i++)
                 {
-                    JSONObject subject_attendance = subject_array.getJSONObject(i);
-                  //  Toast.makeText(getApplicationContext(),subject_attendance.getString("subject_id"),Toast.LENGTH_LONG).show();
-                    subjectAttendanceItemsList.add(new SubjectAttendanceItem(subject_attendance.getString("subject_id"),subject_attendance.getString("name"),subject_attendance.getString("id"),subject_attendance.getInt("total_absent"),subject_attendance.getInt("total_class"),i,map_id));
+                    JSONObject subject = subject_array.getJSONObject(i);
+                    subjectsList.add(new SubjectByTeacher(subject.getString("s_id"),subject.getString("sub_name"),subject.getString("sub_id"),subject.getInt("semester"),subject.getInt("group"),subject.getString("branch_name"),subject.getString("course_name"),subject.getString("branch_id"),subject.getString("course_id"),subject.getString("aggr_id"),i));
                 }
 
-                ViewAttendanceAdapter mAdapter = new ViewAttendanceAdapter(subjectAttendanceItemsList,getApplicationContext(),ViewAttendance.this);
+                SubjectByTeacherAdapter mAdapter = new SubjectByTeacherAdapter(subjectsList,getApplicationContext(),SubjectsByTeacherActivity.this,extras);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -106,7 +101,6 @@ public class ViewAttendance extends AppCompatActivity implements Callback{
         } catch (Exception e) {
             Log.d("Result",result);
             Log.e("Exception", e.toString());
-       //     Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_LONG).show();
             Util.viewSnackbar(findViewById(android.R.id.content), Urls.parsing_error_message);
         }
     }
@@ -115,7 +109,7 @@ public class ViewAttendance extends AppCompatActivity implements Callback{
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
-                Intent homeIntent = new Intent(this, AttendancePreDetails.class);
+                Intent homeIntent = new Intent(this, GenerateAttendanceSheetPreDetails.class);
                 homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(homeIntent);
         }

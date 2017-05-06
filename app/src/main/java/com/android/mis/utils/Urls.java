@@ -81,6 +81,13 @@ public class Urls {
     public static final String view_detailed_attendance_url = base_url+sub_base+"attendance/subjectattendance";
 
     /*
+        Parameters : map_id,subject_id,adm_no
+        Method GET
+     */
+    public static final String view_detailed_attendance_all_url = base_url+sub_base+"attendance/subjectattendanceall";
+
+
+    /*
         Parameters : none
         Method GET
      */
@@ -91,6 +98,18 @@ public class Urls {
         Method GET
      */
     public static final String post_details_url = base_url+sub_base+"information/postdetails";
+
+    /*
+        Parameters : sessionyear,session
+        Method GET
+     */
+    public static final String subjects_mapped_url = base_url+sub_base+"attendance/subjectmapped";
+
+    /*
+        Parameters : session,session_year,course_name,course_id,branch_name,branch_id,sub_id,sub_name
+        Method GET
+     */
+    public static final String view_attendance_sheet_url = base_url+sub_base+"attendance/viewattendancesheet";
 
     public Urls(){
 

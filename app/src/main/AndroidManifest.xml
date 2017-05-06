@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".utils.AppController"
@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".utils.DownloadService"/>
+        <service android:name=".utils.DownloadService" />
 
         <!-- Defining the Splash screen -->
         <activity
@@ -62,15 +62,23 @@
             android:label="@string/title_activity_view_course"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".javac.Attendance.ViewAttendance"
-            android:label="@string/title_activity_attendance_details"
-            />
-        <activity android:name=".javac.Attendance.AttendancePreDetails"
-            android:label="@string/attendance"
-            ></activity>
+        <activity
+            android:name=".javac.Attendance.ViewAttendance.ViewAttendanceActivity"
+            android:label="@string/title_activity_attendance_details" />
+        <activity
+            android:name=".javac.Attendance.ViewAttendance.AttendancePreDetails"
+            android:label="@string/attendance" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".javac.Attendance.GenerateAttendanceSheet.GenerateAttendanceSheetPreDetails"
+            android:label="@string/title_activity_generate_attendance_sheet_pre_details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".javac.Attendance.GenerateAttendanceSheet.SubjectsByTeacherActivity" />
+        <activity android:name=".javac.Attendance.GenerateAttendanceSheet.ViewAttendanceSheet"></activity>
     </application>
 
 </manifest>

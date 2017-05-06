@@ -66,6 +66,7 @@ public class Util {
         hmap.put("view_details",R.id.view_details);
         hmap.put("edit_details",R.id.edit_details);
         hmap.put("attendance",R.id.attendance);
+        hmap.put("generate_attendance_sheet",R.id.generate_attendance_sheet);
         hmap.put("view_attendance",R.id.view_attendance);
         hmap.put("view_defaulter_list",R.id.view_defaulter_list);
         hmap.put("course_structure",R.id.course_structure);

@@ -25,7 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.mis.R;
-import com.android.mis.javac.Attendance.AttendancePreDetails;
+import com.android.mis.javac.Attendance.GenerateAttendanceSheet.GenerateAttendanceSheetPreDetails;
+import com.android.mis.javac.Attendance.ViewAttendance.AttendancePreDetails;
 import com.android.mis.javac.CourseStructure.CourseStructureActivity;
 import com.android.mis.javac.ViewDetails.ViewDetails;
 import com.android.mis.models.Download;
@@ -169,6 +170,10 @@ public class HomeActivity extends AppCompatActivity
                 break;
 
             case R.id.view_defaulter_list:
+                break;
+
+            case R.id.generate_attendance_sheet:
+                Util.moveToActivity(HomeActivity.this, GenerateAttendanceSheetPreDetails.class,null,false);
                 break;
 
             case R.id.view_course_structure:
