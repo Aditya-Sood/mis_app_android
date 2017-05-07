@@ -21,6 +21,7 @@ import com.android.mis.R;
 import com.android.mis.controllers.Attendance.SubjectSpinnerAdapter;
 import com.android.mis.controllers.CourseStructure.SpinnerAdapter;
 import com.android.mis.models.Attendance.Subject;
+import com.android.mis.models.Attendance.SubjectByTeacher;
 import com.android.mis.utils.Callback;
 import com.android.mis.utils.NetworkRequest;
 import com.android.mis.utils.SessionManagement;
@@ -96,7 +97,11 @@ public class GenerateAttendanceSheetForCommFragment extends Fragment implements 
                     Bundle extras = new Bundle();
                     extras.putString("session_year", session_year_spinner.getSelectedItem().toString());
                     extras.putString("session", session_spinner.getSelectedItem().toString());
-                    Util.moveToActivity(getActivity(),SubjectsByTeacherActivity.class, extras,false);
+                    extras.putString("section", section_spinner.getSelectedItem().toString());
+                    Subject sub = subject_list.get(subject_spinner.getSelectedItemPosition());
+                    SubjectByTeacher temp = new SubjectByTeacher(sub.getSubId(),sub.getName(),sub.getnId(),sub.getSemester(),1,"comm","Bachelor of Technology","comm","comm","comm",0);
+                    extras.putParcelable("subject",temp);
+                    Util.moveToActivity(getActivity(), ViewAttendanceSheet.class,extras,false);
                 }
             }
         });

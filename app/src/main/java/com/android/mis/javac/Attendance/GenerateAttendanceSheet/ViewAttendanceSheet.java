@@ -99,6 +99,11 @@ public class ViewAttendanceSheet extends AppCompatActivity implements Callback,S
             params.put("branch_id",subject.getBranchId());
             params.put("sub_id",subject.getSubId());
             params.put("sub_name",subject.getSubName());
+            params.put("semester",Integer.toString(subject.getSemester()));
+            if(subject.getCourseId().contentEquals("comm")){
+                params.put("section",extras.getString("section"));
+                params.put("group",Integer.toString(subject.getGroup()));
+            }
         }
 
         NetworkRequest nr = new NetworkRequest(ViewAttendanceSheet.this,mProgressView,mErrorView,this,"get", Urls.server_protocol,Urls.view_attendance_sheet_url,params,false,true,0);
