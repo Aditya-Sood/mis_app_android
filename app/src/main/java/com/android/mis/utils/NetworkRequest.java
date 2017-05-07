@@ -156,7 +156,7 @@ public class NetworkRequest{
                 JSONObject json = new JSONObject(result);
                 String message = json.getString("message");
                 if(message.contentEquals(Urls.token_expired_message)){
-                    Util.logoutUser(cntxt);
+                    Util.logoutUser(cntxt,"Session Expired! Login Again");
                 }
                 else{
                     callback.performAction(result,tag);

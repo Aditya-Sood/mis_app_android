@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements Callback{
     private View mProgressView;
     private View mLoginFormView;
     private View mErrorView;
+    private TextView message;
     private HashMap<String,String> params;
 
     @Override
@@ -48,6 +49,17 @@ public class LoginActivity extends AppCompatActivity implements Callback{
         mAdmnView = (AutoCompleteTextView) findViewById(R.id.admn_no);
        // populateAutoComplete();
 
+        message = (TextView)findViewById(R.id.message);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null)
+        {
+            String msg = extras.getString("msg");
+            message.setVisibility(View.VISIBLE);
+            message.setText(msg);
+        }
+        else{
+            message.setVisibility(View.GONE);
+        }
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

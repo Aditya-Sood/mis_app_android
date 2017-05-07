@@ -68,8 +68,8 @@ public class SplashScreen extends AppCompatActivity implements Callback {
                 try {
                     synchronized(this){
                         // Wait given period of time or exit on touch
-                        logo.startAnimation(fadeIn);
-                        wait(1000);
+                     //   logo.startAnimation(fadeIn);
+                        wait(2000);
                     }
                 }
                 catch(InterruptedException ex){

@@ -90,11 +90,15 @@ public class Util {
         manager.enqueue(request);
     }
 
-    public static void logoutUser(Activity activity){
+    public static void logoutUser(Activity activity,String msgToShow){
         AppController.getInstance().getRequestQueue().getCache().clear();
         SessionManagement session = new SessionManagement(activity.getApplicationContext());
         session.logoutUser();
         Intent i = new Intent(activity,LoginActivity.class);
+        if(msgToShow.length()!=0)
+        {
+            i.putExtra("msg",msgToShow);
+        }
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(i);;
     }

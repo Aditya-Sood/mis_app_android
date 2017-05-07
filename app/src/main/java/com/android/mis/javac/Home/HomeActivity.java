@@ -181,7 +181,7 @@ public class HomeActivity extends AppCompatActivity
                 break;
 
             case R.id.logout:
-                Util.logoutUser(HomeActivity.this);
+                Util.logoutUser(HomeActivity.this,"");
                 return true;
 
         }
