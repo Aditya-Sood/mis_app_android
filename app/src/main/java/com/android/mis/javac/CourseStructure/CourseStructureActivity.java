@@ -2,8 +2,6 @@ package com.android.mis.javac.CourseStructure;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +16,7 @@ import android.widget.Spinner;
 
 import com.android.mis.R;
 import com.android.mis.controllers.CourseStructure.CoursesAdapter;
-import com.android.mis.controllers.SpinnerAdapter;
+import com.android.mis.controllers.CourseStructure.SpinnerAdapter;
 import com.android.mis.javac.Home.HomeActivity;
 import com.android.mis.models.CourseStructure.Course;
 import com.android.mis.models.CourseStructure.Department;

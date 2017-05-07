@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class GenerateAttendanceSheetForRegularStudentsFragment extends Fragment 
     private View mErrorView;
     private Button refreshOnError;
     private CardView card;
+    private RelativeLayout layout;
 
 
     public GenerateAttendanceSheetForRegularStudentsFragment() {
@@ -60,6 +62,7 @@ public class GenerateAttendanceSheetForRegularStudentsFragment extends Fragment 
 
         session_spinner = (Spinner)rootView.findViewById(R.id.session_spinner);
         session_year_spinner = (Spinner)rootView.findViewById(R.id.session_year_spinner);
+        layout = (RelativeLayout)rootView.findViewById(R.id.fragment_att_predetails_regular);
 
         submit_button = (Button)rootView.findViewById(R.id.submit_button);
         session_year_list = new ArrayList<>();
@@ -78,13 +81,12 @@ public class GenerateAttendanceSheetForRegularStudentsFragment extends Fragment 
 
         session_spinner.setAdapter(sessionAdapter);
 
-
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (isNotSelected(session_spinner) || isNotSelected(session_year_spinner)) {
-                    Util.viewSnackbar(getView().findViewById(android.R.id.content), Urls.empty_message);
+                    Toast.makeText(getActivity().getApplicationContext(),"Please Fill all the fields",Toast.LENGTH_SHORT).show();
                 } else {
                     Bundle extras = new Bundle();
                     extras.putString("session_year", session_year_spinner.getSelectedItem().toString());

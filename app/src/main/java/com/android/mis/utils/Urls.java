@@ -111,6 +111,18 @@ public class Urls {
      */
     public static final String view_attendance_sheet_url = base_url+sub_base+"attendance/viewattendancesheet";
 
+    /*
+        Parameters : session,session_year
+        Method GET
+     */
+    public static final String subjects_comm_url = base_url+sub_base+"attendance/getsubjectscommon";
+
+    /*
+        Parameter : session,sesssion_year,sub_id
+        Method GET
+     */
+    public static final String section_comm_url = base_url+sub_base+"attendance/getsectionscommon";
+
     public Urls(){
 
     }

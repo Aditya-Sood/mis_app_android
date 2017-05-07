@@ -92,7 +92,7 @@ public class HomeActivity extends AppCompatActivity
             sessionDetails = session.getSessionDetails();
             userName.setText(sessionDetails.get(SessionManagement.KEY_NAME));
             userEmailId.setText(sessionDetails.get(SessionManagement.KEY_EMAIL));
-            Picasso.with(getApplicationContext()).load(Urls.image_base_path+sessionDetails.get(SessionManagement.KEY_PIC_PATH)).transform(new CircleTransform()).placeholder(R.mipmap.default_usr).error(R.mipmap.default_usr).resize(100,100).into(userPic);
+            Picasso.with(getApplicationContext()).load(Urls.image_base_path+sessionDetails.get(SessionManagement.KEY_PIC_PATH)).transform(new CircleTransform()).placeholder(R.mipmap.default_usr).error(R.mipmap.default_profile).resize(100,100).into(userPic);
         }
 
         loader = headerview.findViewById(R.id.loader);

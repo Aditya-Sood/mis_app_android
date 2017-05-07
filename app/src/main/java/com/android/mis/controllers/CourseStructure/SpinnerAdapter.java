@@ -1,4 +1,4 @@
-package com.android.mis.controllers;
+package com.android.mis.controllers.CourseStructure;
 
 import android.content.Context;
 import android.view.LayoutInflater;
