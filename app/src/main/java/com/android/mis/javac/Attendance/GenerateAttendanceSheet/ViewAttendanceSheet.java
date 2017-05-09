@@ -191,6 +191,12 @@ public class ViewAttendanceSheet extends AppCompatActivity implements Callback,S
                     item.setChecked(true);
                     mAdapter.setFilter(filterDefaulterList(studentList));
                 }
+                return true;
+            case android.R.id.home:
+                Intent homeIntent = new Intent(this, GenerateAttendanceSheetPreDetails.class);
+                homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
+                return true;
         }
         return true;
     }
@@ -234,4 +240,5 @@ public class ViewAttendanceSheet extends AppCompatActivity implements Callback,S
         }
         return filteredModelList;
     }
+
 }

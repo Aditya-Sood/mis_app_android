@@ -160,7 +160,7 @@ public class AttendancePreDetails extends AppCompatActivity implements AdapterVi
                     }
                 } catch (Exception e) {
                     Log.e("Exception", e.toString());
-                    Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_LONG).show();
                     Util.viewSnackbar(findViewById(android.R.id.content), Urls.parsing_error_message);
                 }
                 break;
@@ -171,7 +171,7 @@ public class AttendancePreDetails extends AppCompatActivity implements AdapterVi
                 try {
                     JSONObject json = new JSONObject(result);
                     if (json.getBoolean("success") == true) {
-                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                         JSONArray details = json.getJSONArray("semester");
                         for (int i = 0; i < details.length(); i++) {
                             JSONObject sy = details.getJSONObject(i);

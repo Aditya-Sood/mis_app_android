@@ -232,7 +232,7 @@ public class GenerateAttendanceSheetForCommFragment extends Fragment implements 
                         for (int i = 0; i < details.length(); i++) {
                             JSONObject sy = details.getJSONObject(i);
                             session_year_list.add(sy.getString("session_year"));
-                            Toast.makeText(getActivity().getApplicationContext(),sy.getString("session_year"),Toast.LENGTH_LONG).show();
+                          //  Toast.makeText(getActivity().getApplicationContext(),sy.getString("session_year"),Toast.LENGTH_LONG).show();
                         }
                         session_year_spinner.setOnItemSelectedListener(this);
                         ArrayAdapter<String> sessionYearAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.simple_spinner_item, session_year_list);
@@ -242,7 +242,7 @@ public class GenerateAttendanceSheetForCommFragment extends Fragment implements 
                     }
                 } catch (Exception e) {
                     Log.e("Exception", e.toString());
-                    Toast.makeText(getActivity().getApplicationContext(),e.toString(),Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(getActivity().getApplicationContext(),e.toString(),Toast.LENGTH_LONG).show();
                     Util.viewSnackbar(getActivity().findViewById(android.R.id.content), Urls.parsing_error_message);
                 }
                 break;
@@ -263,7 +263,7 @@ public class GenerateAttendanceSheetForCommFragment extends Fragment implements 
                     }
                 } catch (Exception e) {
                     Log.e("Exception", e.toString());
-                    Toast.makeText(getActivity().getApplicationContext(),e.toString(),Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(getActivity().getApplicationContext(),e.toString(),Toast.LENGTH_LONG).show();
                     Util.viewSnackbar(getView().findViewById(android.R.id.content), Urls.parsing_error_message);
                 }
                 break;
@@ -284,7 +284,7 @@ public class GenerateAttendanceSheetForCommFragment extends Fragment implements 
                     }
                 } catch (Exception e) {
                     Log.e("Exception", e.toString());
-                    Toast.makeText(getActivity().getApplicationContext(),e.toString(),Toast.LENGTH_LONG).show();
+                 //   Toast.makeText(getActivity().getApplicationContext(),e.toString(),Toast.LENGTH_LONG).show();
                     Util.viewSnackbar(getView().findViewById(android.R.id.content), Urls.parsing_error_message);
                 }
                 break;

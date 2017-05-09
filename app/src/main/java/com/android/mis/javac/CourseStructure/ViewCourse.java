@@ -202,7 +202,7 @@ public class ViewCourse extends AppCompatActivity implements Callback {
             }
         }catch (Exception e){
             Log.e("Exception",e.toString());
-            Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_LONG).show();
             Util.viewSnackbar(findViewById(android.R.id.content),Urls.parsing_error_message);
         }
     }

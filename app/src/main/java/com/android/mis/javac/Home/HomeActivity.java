@@ -203,7 +203,7 @@ public class HomeActivity extends AppCompatActivity
             // set the toolbar title
             getSupportActionBar().setTitle(title);
         }else{
-            Toast.makeText(getApplicationContext(),title,Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(),title,Toast.LENGTH_LONG).show();
         }
     }
 
@@ -231,8 +231,8 @@ public class HomeActivity extends AppCompatActivity
         menu = navigationView.getMenu();
         while(iterator.hasNext()) {
             String key = (String) iterator.next();
-            Toast.makeText(getApplicationContext(),modules.optString(key),Toast.LENGTH_LONG).show();
-            Log.d("hurray",modules.optString(key));
+          //  Toast.makeText(getApplicationContext(),modules.optString(key),Toast.LENGTH_LONG).show();
+            //Log.d("hurray",modules.optString(key));
 
             MenuItem current =  menu.findItem(hmap.get(modules.optString(key)));
             current.setVisible(true);
