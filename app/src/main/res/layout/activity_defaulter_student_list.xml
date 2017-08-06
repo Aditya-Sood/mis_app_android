@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/loader"
+        layout="@layout/loader"
+        android:visibility="gone"/>
+
+    <include
+        android:id="@+id/err"
+        layout="@layout/error"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/subject_name_text_view"
+        android:background="@color/details_background1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:padding="10dp"
+        android:textSize="20dp"
+        tools:text="Subject Name"/>
+
+    <TextView
+        android:id="@+id/total_classes_text_view"
+        android:background="@color/details_background1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:textSize="17dp"
+        tools:text="Total Classes - XX"/>
+
+    <TextView
+        android:id="@+id/last_class_date_text_view"
+        android:background="@color/details_background1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:textSize="17dp"
+        tools:text="Last Class - 01/01/01"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <ListView
+        android:id="@+id/defaulter_student_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+    </ListView>
+
+</LinearLayout>
